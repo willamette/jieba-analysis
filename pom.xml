@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -31,6 +31,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <lucene.version>2.4.1</lucene.version>
     </properties>
 
     <developers>
@@ -42,6 +43,9 @@
         <developer>
             <id>tokikanno</id>
             <name>tokikanno</name>
+        </developer>
+        <developer>
+            <id>chen</id>
         </developer>
     </developers>
 
@@ -56,6 +60,21 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.1</version>
         </dependency>
     </dependencies>
 
@@ -120,39 +139,39 @@
                 </executions>
             </plugin>
             <plugin>
-              <groupId>de.thetaphi</groupId>
-              <artifactId>forbiddenapis</artifactId>
-              <version>1.8</version>
-              <configuration>
-                <!-- disallow undocumented classes like sun.misc.Unsafe: -->
-                <internalRuntimeForbidden>true</internalRuntimeForbidden>
-                <!--
-                  if the used Java version is too new,
-                  don't fail, just do nothing:
-                -->
-                <failOnUnsupportedJava>false</failOnUnsupportedJava>
-                <bundledSignatures>
-                  <!--
-                    This will automatically choose the right
-                    signatures based on 'maven.compiler.target':
-                  -->
-                  <bundledSignature>jdk-unsafe</bundledSignature>
-                  <bundledSignature>jdk-deprecated</bundledSignature>
-                </bundledSignatures>
-                <!--
-                <signaturesFiles>
-                  <signaturesFile>./rel/path/to/signatures.txt</signaturesFile>
-                </signaturesFiles>
-                -->
-              </configuration>
-              <executions>
-                <execution>
-                  <goals>
-                    <goal>check</goal>
-                    <goal>testCheck</goal>
-                  </goals>
-                </execution>
-              </executions>
+                <groupId>de.thetaphi</groupId>
+                <artifactId>forbiddenapis</artifactId>
+                <version>1.8</version>
+                <configuration>
+                    <!-- disallow undocumented classes like sun.misc.Unsafe: -->
+                    <internalRuntimeForbidden>true</internalRuntimeForbidden>
+                    <!--
+                      if the used Java version is too new,
+                      don't fail, just do nothing:
+                    -->
+                    <failOnUnsupportedJava>false</failOnUnsupportedJava>
+                    <bundledSignatures>
+                        <!--
+                          This will automatically choose the right
+                          signatures based on 'maven.compiler.target':
+                        -->
+                        <bundledSignature>jdk-unsafe</bundledSignature>
+                        <bundledSignature>jdk-deprecated</bundledSignature>
+                    </bundledSignatures>
+                    <!--
+                    <signaturesFiles>
+                      <signaturesFile>./rel/path/to/signatures.txt</signaturesFile>
+                    </signaturesFiles>
+                    -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>testCheck</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
